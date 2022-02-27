@@ -29,14 +29,15 @@ function App() {
       const newTodos = [];
       newTodos.push(input);
       localStorage.setItem("todos", JSON.stringify(newTodos));
-      setTodos(newTodos);
     } else {
       const todosFromLs = JSON.parse(todosFromLsJSON);
       const newTodos = [...todosFromLs];
       newTodos.push(input);
       localStorage.setItem("todos", JSON.stringify(newTodos));
-      setTodos(newTodos);
     }
+
+    const newTodosFromLsJSON = localStorage.getItem("todos");
+    setTodos(newTodosFromLsJSON ? JSON.parse(newTodosFromLsJSON) : []);
   };
 
   return (

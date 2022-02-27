@@ -19,15 +19,19 @@ const AddTodoForm: React.FC<ITodos> = ({ todos, addToLS }) => {
     let newTodoInput = { ...todoInput };
     newTodoInput.text = e.target.value;
     setTodoInput(newTodoInput);
-    console.log(newTodoInput);
   };
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    console.log(e);
     if (todoInput.text.trim().length) {
       addToLS(todoInput);
-      setTodoInput({ id: todos.length + 1, text: "" });
+
+      // Checking local storage for new data
+      const newTodosFromLsJSON = localStorage.getItem("todos");
+      const newTodosFromLs = newTodosFromLsJSON
+        ? JSON.parse(newTodosFromLsJSON)
+        : [];
+      setTodoInput({ id: newTodosFromLs.length, text: "" });
     }
   };
 
