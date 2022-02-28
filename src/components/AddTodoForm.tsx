@@ -2,36 +2,21 @@ import { Button, Container, TextField } from "@mui/material";
 import React, { useState } from "react";
 
 interface ITodos {
-  todos: {
-    id: number;
-    text: string;
-  }[];
-  addToLS: (input: { id: number; text: string }) => void;
+  addToLS: (input: string) => void;
 }
 
-const AddTodoForm: React.FC<ITodos> = ({ todos, addToLS }) => {
-  const [todoInput, setTodoInput] = useState<{
-    id: number;
-    text: string;
-  }>({ id: todos.length, text: "" });
+const AddTodoForm: React.FC<ITodos> = ({ addToLS }) => {
+  const [todoInput, setTodoInput] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    let newTodoInput = { ...todoInput };
-    newTodoInput.text = e.target.value;
-    setTodoInput(newTodoInput);
+    setTodoInput(e.target.value);
   };
 
   const handleSubmit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    if (todoInput.text.trim().length) {
+    if (todoInput.trim().length) {
       addToLS(todoInput);
-
-      // Checking local storage for new data
-      const newTodosFromLsJSON = localStorage.getItem("todos");
-      const newTodosFromLs = newTodosFromLsJSON
-        ? JSON.parse(newTodosFromLsJSON)
-        : [];
-      setTodoInput({ id: newTodosFromLs.length, text: "" });
+      setTodoInput("");
     }
   };
 
@@ -41,7 +26,7 @@ const AddTodoForm: React.FC<ITodos> = ({ todos, addToLS }) => {
         <form onSubmit={handleSubmit}>
           <TextField
             type="text"
-            value={todoInput.text}
+            value={todoInput}
             onChange={handleChange}
             label="Add todo"
             variant="outlined"

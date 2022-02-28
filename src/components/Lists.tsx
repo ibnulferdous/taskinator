@@ -3,18 +3,25 @@ import SingleTodo from "./SingleTodo";
 
 interface ITodos {
   todos: {
-    id: number;
+    id: string;
     text: string;
   }[];
+  handleDelete: (id: string) => void;
 }
 
-const Lists: React.FC<ITodos> = ({ todos }) => {
+const Lists: React.FC<ITodos> = ({ todos, handleDelete }) => {
   return (
     <main>
       <Container maxWidth="md">
         <List disablePadding>
           {todos.map((todo, index) => {
-            return <SingleTodo key={index} todo={todo}></SingleTodo>;
+            return (
+              <SingleTodo
+                key={index}
+                todo={todo}
+                handleDelete={handleDelete}
+              ></SingleTodo>
+            );
           })}
         </List>
       </Container>
